@@ -10,7 +10,8 @@
   background-color: lightgray;
   padding: 10px;
   border: 2px solid gray;
-  box-shadow: 2px 2px gray;
+  box-shadow: 1px 1px 0px 1px gray;
+  margin: 40px;
 }
 
 .display {
@@ -56,15 +57,23 @@ button {
 .extra button {
   background-color: lightblue;
   border: blue 2px solid;
-  box-shadow: 2px 2px blue;
+  box-shadow: 1px 1px 0px 1px blue;
+}
+
+.extra button:hover {
+  background-color: rgb(159, 206, 221);
 }
 
 .operators button {
   background-color: lightgoldenrodyellow;
   border: 2px solid goldenrod;
-  box-shadow: 2px 2px goldenrod;
+  box-shadow: 1px 1px 0px 1px goldenrod;
+}
+
+.operators button:hover {
+  background-color: rgb(241, 241, 195);
 }
 
 .numbers button {
-  box-shadow: 2px 2px black;
+  box-shadow: 1px 1px 0px 1px black;
 }

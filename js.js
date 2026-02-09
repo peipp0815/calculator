@@ -32,3 +32,50 @@ function operate(num1, operator, num2) {
       break;
   }
 }
+
+const display = document.querySelector(".display");
+const numbers = document.querySelectorAll(".numbers");
+
+function updateDisplay(num) {
+  switch (num) {
+    case "nine":
+      display.textContent += "9";
+      console.log("nine");
+      break;
+    case "eight":
+      display.textContent += "8";
+      break;
+    case "seven":
+      display.textContent += "7";
+      break;
+    case "six":
+      display.textContent += "6";
+      break;
+    case "five":
+      display.textContent += "5";
+      break;
+    case "four":
+      display.textContent += "4";
+      break;
+    case "three":
+      display.textContent += "3";
+      break;
+    case "two":
+      display.textContent += "2";
+      break;
+    case "one":
+      display.textContent += "1";
+      break;
+    case "zero":
+      display.textContent += "0";
+      break;
+    default:
+      break;
+  }
+}
+
+numbers.forEach((num) => {
+  num.addEventListener("click", () => {
+    updateDisplay(num.id);
+  });
+});

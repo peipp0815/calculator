@@ -35,12 +35,13 @@ function operate(num1, operator, num2) {
 
 const display = document.querySelector(".display");
 const numbers = document.querySelectorAll(".numbers");
+const operators = document.querySelectorAll(".operators");
+const result = document.querySelector("#result");
 
-function updateDisplay(num) {
-  switch (num) {
+function updateDisplay(input) {
+  switch (input) {
     case "nine":
       display.textContent += "9";
-      console.log("nine");
       break;
     case "eight":
       display.textContent += "8";
@@ -69,6 +70,18 @@ function updateDisplay(num) {
     case "zero":
       display.textContent += "0";
       break;
+    case "addition":
+      display.textContent = "+";
+      break;
+    case "subtraction":
+      display.textContent = "-";
+      break;
+    case "multiplication":
+      display.textContent = "*";
+      break;
+    case "division":
+      display.textContent = "/";
+      break;
     default:
       break;
   }
@@ -77,5 +90,28 @@ function updateDisplay(num) {
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
     updateDisplay(num.id);
+    if (operator === undefined) {
+      num1 = Number(display.textContent);
+    } else {
+      num2 = Number(display.textContent);
+    }
+    console.log(`num1 ${num1}`);
+    console.log(`num2 ${num2}`);
   });
+});
+
+operators.forEach((input) => {
+  input.addEventListener("click", () => {
+    updateDisplay(input.id);
+    operator = display.textContent;
+    display.textContent = "";
+    console.log(operator);
+  });
+});
+
+result.addEventListener("click", () => {
+  display.textContent = operate(num1, operator, num2);
+  num1 = undefined;
+  operator = undefined;
+  num2 = undefined;
 });

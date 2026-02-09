@@ -44,7 +44,7 @@
   justify-content: end;
 }
 
-.operators {
+.operatorsAndResult {
   display: flex;
   flex-direction: column;
 }
@@ -64,13 +64,13 @@
   background-color: rgb(159, 206, 221);
 }
 
-.operators .btn {
+.operatorsAndResult .btn {
   background-color: lightgoldenrodyellow;
   border: 2px solid goldenrod;
   box-shadow: 1px 1px 0px 1px goldenrod;
 }
 
-.operators .btn:hover {
+.operatorsAndResult .btn:hover {
   background-color: rgb(241, 241, 195);
 }
 

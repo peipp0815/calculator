@@ -1,6 +1,8 @@
 let num1;
 let operator;
 let num2;
+let justPressedOperator = false;
+let justPressedResult = false;
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -19,18 +21,25 @@ function divide(a, b) {
 }
 
 function operate(num1, operator, num2) {
+  let result;
   switch (operator) {
-    case "+":
-      return add(num1, num2);
-    case "-":
-      return subtract(num1, num2);
-    case "*":
-      return multiply(num1, num2);
-    case "/":
-      return divide(num1, num2);
+    case "addition":
+      result = add(num1, num2);
+      break;
+    case "subtraction":
+      result = subtract(num1, num2);
+      break;
+    case "multiplication":
+      result = multiply(num1, num2);
+      break;
+    case "division":
+      result = divide(num1, num2);
+      break;
     default:
       break;
   }
+  console.log(result);
+  return result;
 }
 
 const display = document.querySelector(".display");
@@ -38,80 +47,96 @@ const numbers = document.querySelectorAll(".numbers");
 const operators = document.querySelectorAll(".operators");
 const result = document.querySelector("#result");
 
-function updateDisplay(input) {
+function updateNumbers(input) {
+  let num = "0";
+  if (num1 !== undefined && justPressedOperator === false) {
+    num = String(num1);
+  }
+  if (justPressedOperator === true && num2 !== undefined) {
+    num = String(num2);
+  }
   switch (input) {
     case "nine":
-      display.textContent += "9";
+      num += "9";
       break;
     case "eight":
-      display.textContent += "8";
+      num += "8";
       break;
     case "seven":
-      display.textContent += "7";
+      num += "7";
       break;
     case "six":
-      display.textContent += "6";
+      num += "6";
       break;
     case "five":
-      display.textContent += "5";
+      num += "5";
       break;
     case "four":
-      display.textContent += "4";
+      num += "4";
       break;
     case "three":
-      display.textContent += "3";
+      num += "3";
       break;
     case "two":
-      display.textContent += "2";
+      num += "2";
       break;
     case "one":
-      display.textContent += "1";
+      num += "1";
       break;
     case "zero":
-      display.textContent += "0";
-      break;
-    case "addition":
-      display.textContent = "+";
-      break;
-    case "subtraction":
-      display.textContent = "-";
-      break;
-    case "multiplication":
-      display.textContent = "*";
-      break;
-    case "division":
-      display.textContent = "/";
-      break;
+      num += "0";
     default:
       break;
   }
+  console.log(num);
+  return Number(num);
 }
 
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
-    updateDisplay(num.id);
-    if (operator === undefined) {
-      num1 = Number(display.textContent);
-    } else {
-      num2 = Number(display.textContent);
+    if (justPressedResult === true) {
+      num1 = undefined;
+      justPressedResult = false;
     }
+    if (justPressedOperator === false) {
+      num1 = Number(updateNumbers(num.id));
+      display.textContent = num1;
+    } else {
+      num2 = Number(updateNumbers(num.id));
+      display.textContent = num2;
+    }
+    justPressedOperator = false;
     console.log(`num1 ${num1}`);
     console.log(`num2 ${num2}`);
+    console.log(`operator ${operator}`);
   });
 });
 
 operators.forEach((input) => {
   input.addEventListener("click", () => {
-    updateDisplay(input.id);
-    operator = display.textContent;
-    display.textContent = "";
-    console.log(operator);
+    justPressedResult = false;
+    if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
+      num1 = operate(num1, operator, num2);
+      display.textContent = num1;
+      num2 = undefined;
+    }
+    if (num1 !== undefined) {
+      operator = input.id;
+      justPressedOperator = true;
+      console.log(`num1 ${num1}`);
+      console.log(`num2 ${num2}`);
+      console.log(`operator ${operator}`);
+    }
   });
 });
 
 result.addEventListener("click", () => {
+  console.log(`num1 ${num1}`);
+  console.log(`num2 ${num2}`);
+  console.log(`operator ${operator}`);
   display.textContent = operate(num1, operator, num2);
-  num1 = undefined;
+  num1 = display.textContent;
   operator = undefined;
   num2 = undefined;
+  justPressedResult = true;
 });

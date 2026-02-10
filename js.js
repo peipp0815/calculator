@@ -45,6 +45,7 @@ const display = document.querySelector(".display");
 const numbers = document.querySelectorAll(".numbers");
 const operators = document.querySelectorAll(".operators");
 const result = document.querySelector("#result");
+const clear = document.querySelector("#clear");
 
 function updateNumbers(input) {
   let num = "0";
@@ -145,6 +146,15 @@ result.addEventListener("click", () => {
   console.log(`num1 ${num1}`);
   console.log(`num2 ${num2}`);
   console.log(`operator ${operator}`);
+});
+
+clear.addEventListener("click", () => {
+  num1 = undefined;
+  operator = undefined;
+  num2 = undefined;
+  num1Complete = false;
+  justGotResult = false;
+  display.textContent = "";
 });
 
 /*     console.log(`num1 ${num1}`);

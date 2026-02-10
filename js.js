@@ -1,8 +1,8 @@
 let num1;
 let operator;
 let num2;
-let justPressedOperator = false;
-let justPressedResult = false;
+let num1Complete = false;
+let justGotResult = false;
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -38,7 +38,6 @@ function operate(num1, operator, num2) {
     default:
       break;
   }
-  console.log(result);
   return result;
 }
 
@@ -49,10 +48,10 @@ const result = document.querySelector("#result");
 
 function updateNumbers(input) {
   let num = "0";
-  if (num1 !== undefined && justPressedOperator === false) {
+  if (num1 !== undefined && num1Complete === false) {
     num = String(num1);
   }
-  if (justPressedOperator === true && num2 !== undefined) {
+  if (num1Complete === true && num2 !== undefined) {
     num = String(num2);
   }
   switch (input) {
@@ -88,24 +87,24 @@ function updateNumbers(input) {
     default:
       break;
   }
-  console.log(num);
   return Number(num);
 }
 
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
-    if (justPressedResult === true) {
+    if (justGotResult) {
       num1 = undefined;
-      justPressedResult = false;
+      num1Complete = false;
+      justGotResult = false;
     }
-    if (justPressedOperator === false) {
+    if (num1Complete === false) {
       num1 = Number(updateNumbers(num.id));
       display.textContent = num1;
     } else {
       num2 = Number(updateNumbers(num.id));
       display.textContent = num2;
     }
-    justPressedOperator = false;
+
     console.log(`num1 ${num1}`);
     console.log(`num2 ${num2}`);
     console.log(`operator ${operator}`);
@@ -114,29 +113,40 @@ numbers.forEach((num) => {
 
 operators.forEach((input) => {
   input.addEventListener("click", () => {
-    justPressedResult = false;
     if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
       num1 = operate(num1, operator, num2);
+      num1Complete = true;
       display.textContent = num1;
       num2 = undefined;
+      justGotResult = true;
     }
     if (num1 !== undefined) {
+      num1Complete = true;
       operator = input.id;
-      justPressedOperator = true;
-      console.log(`num1 ${num1}`);
-      console.log(`num2 ${num2}`);
-      console.log(`operator ${operator}`);
+      justGotResult = false;
     }
+
+    console.log(`num1 ${num1}`);
+    console.log(`num2 ${num2}`);
+    console.log(`operator ${operator}`);
   });
 });
 
 result.addEventListener("click", () => {
+  if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
+    num1 = operate(num1, operator, num2);
+    num1Complete = true;
+    display.textContent = num1;
+    num2 = undefined;
+    operator = undefined;
+    justGotResult = true;
+  }
+
   console.log(`num1 ${num1}`);
   console.log(`num2 ${num2}`);
   console.log(`operator ${operator}`);
-  display.textContent = operate(num1, operator, num2);
-  num1 = display.textContent;
-  operator = undefined;
-  num2 = undefined;
-  justPressedResult = true;
 });
+
+/*     console.log(`num1 ${num1}`);
+    console.log(`num2 ${num2}`);
+    console.log(`operator ${operator}`); */

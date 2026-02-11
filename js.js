@@ -116,12 +116,20 @@ operators.forEach((input) => {
   input.addEventListener("click", () => {
     if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
       num1 = operate(num1, operator, num2);
-      num1Complete = true;
-      display.textContent = num1;
-      num2 = undefined;
-      justGotResult = true;
-    }
-    if (num1 !== undefined) {
+      if (!Number.isFinite(num1)) {
+        num1 = undefined;
+        operator = undefined;
+        num2 = undefined;
+        num1Complete = false;
+        justGotResult = false;
+        display.textContent = "Don't do that!";
+      } else {
+        num1Complete = true;
+        display.textContent = num1;
+        justGotResult = true;
+        num2 = undefined;
+      }
+    } else if (num1 !== undefined) {
       num1Complete = true;
       operator = input.id;
       justGotResult = false;
@@ -136,11 +144,19 @@ operators.forEach((input) => {
 result.addEventListener("click", () => {
   if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
     num1 = operate(num1, operator, num2);
-    num1Complete = true;
-    display.textContent = num1;
-    num2 = undefined;
-    operator = undefined;
-    justGotResult = true;
+    if (!Number.isFinite(num1)) {
+      num1 = undefined;
+      operator = undefined;
+      num2 = undefined;
+      num1Complete = false;
+      justGotResult = false;
+      display.textContent = "Don't do that!";
+    } else {
+      num1Complete = true;
+      display.textContent = num1;
+      justGotResult = true;
+      num2 = undefined;
+    }
   }
 
   console.log(`num1 ${num1}`);

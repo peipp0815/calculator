@@ -2,7 +2,6 @@
   padding: 0;
   margin: 0;
   box-sizing: border-box;
-  font-weight: bold;
 }
 
 .calculator {
@@ -27,7 +26,6 @@
   box-shadow: inset 2px 2px green;
   white-space: nowrap;
   overflow: auto;
-  font-weight: normal;
   border-radius: 5px;
 }
 
@@ -83,4 +81,5 @@
 
 .numPad .btn {
   box-shadow: 1px 1px 0px 1px black;
+  width: 52px;
 }

@@ -1,8 +1,3 @@
-const display = document.querySelector(".display");
-const numbers = document.querySelectorAll(".numbers");
-const operators = document.querySelectorAll(".operators");
-const clear = document.querySelector("#clear");
-
 const calculator = {
   num1: undefined,
   operator: undefined,
@@ -11,6 +6,12 @@ const calculator = {
   justGotResult: false,
   alreadyUsedDot: false,
 };
+
+const display = document.querySelector(".display");
+const numbers = document.querySelectorAll(".numbers");
+const operators = document.querySelectorAll(".operators");
+const clear = document.querySelector("#clear");
+const backspace = document.querySelector("#backspace");
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -163,7 +164,20 @@ operators.forEach((input) => {
 });
 
 clear.addEventListener("click", () => {
-  calculator.num1 = undefined;
   clearCalculator();
   display.textContent = "";
+});
+
+backspace.addEventListener("click", () => {
+  if (
+    calculator.num2 === undefined &&
+    calculator.num1 !== undefined &&
+    calculator.num1Complete === false
+  ) {
+    calculator.num1 = calculator.num1.slice(0, -1);
+    display.textContent = calculator.num1;
+  } else if (calculator.num2 !== undefined) {
+    calculator.num2 = calculator.num2.slice(0, -1);
+    display.textContent = calculator.num2;
+  }
 });

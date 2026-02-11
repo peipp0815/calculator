@@ -9,6 +9,7 @@ const calculator = {
   num2: undefined,
   num1Complete: false,
   justGotResult: false,
+  alreadyUsedDot: false,
 };
 
 function add(a, b) {
@@ -49,7 +50,7 @@ function operate(num1, operator, num2) {
 }
 
 function updateNumbers(input) {
-  let num = "0";
+  let num = "";
   if (calculator.num1 !== undefined && calculator.num1Complete === false) {
     num = String(calculator.num1);
   }
@@ -86,10 +87,15 @@ function updateNumbers(input) {
       break;
     case "zero":
       num += "0";
+      break;
+    case "dot":
+      num += ".";
+      calculator.alreadyUsedDot = true;
+      break;
     default:
       break;
   }
-  return Number(num);
+  return num;
 }
 
 function clearCalculator() {
@@ -98,6 +104,7 @@ function clearCalculator() {
   calculator.num2 = undefined;
   calculator.num1Complete = false;
   calculator.justGotResult = false;
+  calculator.alreadyUsedDot = false;
 }
 
 numbers.forEach((num) => {
@@ -105,14 +112,15 @@ numbers.forEach((num) => {
     if (calculator.justGotResult) {
       clearCalculator();
     }
-    if (calculator.num1Complete === false) {
-      calculator.num1 = Number(updateNumbers(num.id));
-      display.textContent = calculator.num1;
-    } else {
-      calculator.num2 = Number(updateNumbers(num.id));
-      display.textContent = calculator.num2;
+    if (num.id !== "dot" || calculator.alreadyUsedDot === false) {
+      if (calculator.num1Complete === false) {
+        calculator.num1 = updateNumbers(num.id);
+        display.textContent = calculator.num1;
+      } else {
+        calculator.num2 = updateNumbers(num.id);
+        display.textContent = calculator.num2;
+      }
     }
-
     console.log(`num1 ${calculator.num1}`);
     console.log(`num2 ${calculator.num2}`);
     console.log(`operator ${calculator.operator}`);
@@ -121,6 +129,7 @@ numbers.forEach((num) => {
 
 operators.forEach((input) => {
   input.addEventListener("click", () => {
+    calculator.alreadyUsedDot = false;
     if (
       calculator.operator !== undefined &&
       calculator.num1 !== undefined &&
@@ -140,7 +149,8 @@ operators.forEach((input) => {
         calculator.justGotResult = true;
         calculator.num2 = undefined;
       }
-    } else if (calculator.num1 !== undefined && input.id !== "result") {
+    }
+    if (calculator.num1 !== undefined && input.id !== "result") {
       calculator.num1Complete = true;
       calculator.operator = input.id;
       calculator.justGotResult = false;

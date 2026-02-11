@@ -1,8 +1,10 @@
-let num1;
-let operator;
-let num2;
-let num1Complete = false;
-let justGotResult = false;
+const calculator = {
+  num1: undefined,
+  operator: undefined,
+  num2: undefined,
+  num1Complete: false,
+  justGotResult: false,
+};
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -49,11 +51,11 @@ const clear = document.querySelector("#clear");
 
 function updateNumbers(input) {
   let num = "0";
-  if (num1 !== undefined && num1Complete === false) {
-    num = String(num1);
+  if (calculator.num1 !== undefined && calculator.num1Complete === false) {
+    num = String(calculator.num1);
   }
-  if (num1Complete === true && num2 !== undefined) {
-    num = String(num2);
+  if (calculator.num1Complete === true && calculator.num2 !== undefined) {
+    num = String(calculator.num2);
   }
   switch (input) {
     case "nine":
@@ -91,85 +93,98 @@ function updateNumbers(input) {
   return Number(num);
 }
 
+function clearCalculator() {
+  calculator.num1 = undefined;
+  calculator.operator = undefined;
+  calculator.num2 = undefined;
+  calculator.num1Complete = false;
+  calculator.justGotResult = false;
+}
+
 numbers.forEach((num) => {
   num.addEventListener("click", () => {
-    if (justGotResult) {
-      num1 = undefined;
-      num1Complete = false;
-      justGotResult = false;
+    if (calculator.justGotResult) {
+      calculator.num1 = undefined;
+      calculator.num1Complete = false;
+      calculator.justGotResult = false;
     }
-    if (num1Complete === false) {
-      num1 = Number(updateNumbers(num.id));
-      display.textContent = num1;
+    if (calculator.num1Complete === false) {
+      calculator.num1 = Number(updateNumbers(num.id));
+      display.textContent = calculator.num1;
     } else {
-      num2 = Number(updateNumbers(num.id));
-      display.textContent = num2;
+      calculator.num2 = Number(updateNumbers(num.id));
+      display.textContent = calculator.num2;
     }
 
-    console.log(`num1 ${num1}`);
-    console.log(`num2 ${num2}`);
-    console.log(`operator ${operator}`);
+    console.log(`num1 ${calculator.num1}`);
+    console.log(`num2 ${calculator.num2}`);
+    console.log(`operator ${calculator.operator}`);
   });
 });
 
 operators.forEach((input) => {
   input.addEventListener("click", () => {
-    if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
-      num1 = operate(num1, operator, num2);
-      if (!Number.isFinite(num1)) {
-        num1 = undefined;
-        operator = undefined;
-        num2 = undefined;
-        num1Complete = false;
-        justGotResult = false;
+    if (
+      calculator.operator !== undefined &&
+      calculator.num1 !== undefined &&
+      calculator.num2 !== undefined
+    ) {
+      calculator.num1 = operate(
+        calculator.num1,
+        calculator.operator,
+        calculator.num2,
+      );
+      if (!Number.isFinite(calculator.num1)) {
+        clearCalculator();
         display.textContent = "Don't do that!";
       } else {
-        num1Complete = true;
-        display.textContent = num1;
-        justGotResult = true;
-        num2 = undefined;
+        calculator.num1Complete = true;
+        display.textContent = calculator.num1;
+        calculator.justGotResult = true;
+        calculator.num2 = undefined;
       }
-    } else if (num1 !== undefined) {
-      num1Complete = true;
-      operator = input.id;
-      justGotResult = false;
+    } else if (calculator.num1 !== undefined) {
+      calculator.num1Complete = true;
+      calculator.operator = input.id;
+      calculator.justGotResult = false;
     }
 
-    console.log(`num1 ${num1}`);
-    console.log(`num2 ${num2}`);
-    console.log(`operator ${operator}`);
+    console.log(`num1 ${calculator.num1}`);
+    console.log(`num2 ${calculator.num2}`);
+    console.log(`operator ${calculator.operator}`);
   });
 });
 
 result.addEventListener("click", () => {
-  if (operator !== undefined && num1 !== undefined && num2 !== undefined) {
-    num1 = operate(num1, operator, num2);
-    if (!Number.isFinite(num1)) {
-      num1 = undefined;
-      operator = undefined;
-      num2 = undefined;
-      num1Complete = false;
-      justGotResult = false;
+  if (
+    calculator.operator !== undefined &&
+    calculator.num1 !== undefined &&
+    calculator.num2 !== undefined
+  ) {
+    calculator.num1 = operate(
+      calculator.num1,
+      calculator.operator,
+      calculator.num2,
+    );
+    if (!Number.isFinite(calculator.num1)) {
+      clearCalculator();
       display.textContent = "Don't do that!";
     } else {
-      num1Complete = true;
-      display.textContent = num1;
-      justGotResult = true;
-      num2 = undefined;
+      calculator.num1Complete = true;
+      display.textContent = calculator.num1;
+      calculator.justGotResult = true;
+      calculator.num2 = undefined;
     }
   }
 
-  console.log(`num1 ${num1}`);
-  console.log(`num2 ${num2}`);
-  console.log(`operator ${operator}`);
+  console.log(`num1 ${calculator.num1}`);
+  console.log(`num2 ${calculator.num2}`);
+  console.log(`operator ${calculator.operator}`);
 });
 
 clear.addEventListener("click", () => {
-  num1 = undefined;
-  operator = undefined;
-  num2 = undefined;
-  num1Complete = false;
-  justGotResult = false;
+  calculator.num1 = undefined;
+  clearCalculator();
   display.textContent = "";
 });
 

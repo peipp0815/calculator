@@ -17,7 +17,7 @@ function multiply(a, b) {
 }
 
 function divide(a, b) {
-  return Math.round((a / b) * 100) / 100;
+  return Math.round((a / b) * Math.pow(10, 10)) / Math.pow(10, 10);
 }
 
 function operate(num1, operator, num2) {

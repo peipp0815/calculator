@@ -23,6 +23,8 @@
   margin: 8px 4px;
   font-size: xx-large;
   box-shadow: inset 2px 2px green;
+  white-space: nowrap;
+  overflow: auto;
 }
 
 .buttons {

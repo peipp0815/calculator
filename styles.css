@@ -20,7 +20,7 @@
   text-align: right;
   padding: 8px;
   border: 2px solid green;
-  height: 20%;
+  height: 90px;
   margin: 8px 4px;
   font-size: xx-large;
   box-shadow: inset 2px 2px green;
@@ -29,23 +29,26 @@
   border-radius: 5px;
 }
 
+.prevCalculation {
+  height: 30px;
+  font-size: x-large;
+  color: rgb(41, 41, 41);
+}
+
+.displayResult {
+  height: 40px;
+}
+
 .buttons {
   height: 70%;
   display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-}
-
-.numbersOperators {
-  display: flex;
-  justify-content: space-between;
+  align-items: end;
+  justify-content: center;
 }
 
 .numPad {
-  width: 70%;
-  display: flex;
-  flex-direction: column;
-  justify-content: end;
+  width: 200px;
+  margin-top: 10px;
 }
 
 .operatorsAndResult {

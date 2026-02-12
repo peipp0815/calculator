@@ -7,11 +7,12 @@ const calculator = {
   alreadyUsedDot: false,
 };
 
-const display = document.querySelector(".display");
+const display = document.querySelector(".displayResult");
 const numbers = document.querySelectorAll(".numbers");
 const operators = document.querySelectorAll(".operators");
 const clear = document.querySelector("#clear");
 const backspace = document.querySelector("#backspace");
+const prevCalculation = document.querySelector(".prevCalculation");
 
 function add(a, b) {
   return Number(a) + Number(b);
@@ -106,6 +107,26 @@ function clearCalculator() {
   calculator.num1Complete = false;
   calculator.justGotResult = false;
   calculator.alreadyUsedDot = false;
+  prevCalculation.textContent = "";
+}
+
+function getOperator(op) {
+  switch (op) {
+    case "addition":
+      return "+";
+      break;
+    case "subtraction":
+      return "-";
+      break;
+    case "multiplication":
+      return "*";
+      break;
+    case "division":
+      return "/";
+      break;
+    default:
+      break;
+  }
 }
 
 numbers.forEach((num) => {
@@ -131,11 +152,13 @@ numbers.forEach((num) => {
 operators.forEach((input) => {
   input.addEventListener("click", () => {
     calculator.alreadyUsedDot = false;
+    //calculate the prev operation
     if (
       calculator.operator !== undefined &&
       calculator.num1 !== undefined &&
       calculator.num2 !== undefined
     ) {
+      prevCalculation.textContent = `${calculator.num1} ${getOperator(calculator.operator)} ${calculator.num2}`;
       calculator.num1 = operate(
         calculator.num1,
         calculator.operator,
@@ -151,7 +174,9 @@ operators.forEach((input) => {
         calculator.num2 = undefined;
       }
     }
+
     if (calculator.num1 !== undefined && input.id !== "result") {
+      prevCalculation.textContent = "";
       calculator.num1Complete = true;
       calculator.operator = input.id;
       calculator.justGotResult = false;

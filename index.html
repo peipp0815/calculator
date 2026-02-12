@@ -10,13 +10,16 @@
   <body>
     <div class="container">
       <div class="calculator">
-        <p class="display"></p>
+        <div class="display">
+          <p class="prevCalculation"></p>
+          <p class="displayResult"></p>
+        </div>
         <div class="buttons">
-          <div class="extra">
-            <button id="clear" class="btn">AC</button>
-            <button id="backspace" class="btn">CE</button>
-          </div>
-          <div class="numbersOperators">
+          <div class="numbersExtra">
+            <div class="extra">
+              <button id="clear" class="btn">AC</button>
+              <button id="backspace" class="btn">CE</button>
+            </div>
             <div class="numPad">
               <div class="top">
                 <button id="seven" class="btn numbers">7</button>
@@ -38,13 +41,13 @@
                 <button id="dot" class="btn numbers">.</button>
               </div>
             </div>
-            <div class="operatorsAndResult">
-              <button id="addition" class="btn operators">+</button>
-              <button id="subtraction" class="btn operators">-</button>
-              <button id="multiplication" class="btn operators">*</button>
-              <button id="division" class="btn operators">/</button>
-              <button id="result" class="btn operators">=</button>
-            </div>
+          </div>
+          <div class="operatorsAndResult">
+            <button id="addition" class="btn operators">+</button>
+            <button id="subtraction" class="btn operators">-</button>
+            <button id="multiplication" class="btn operators">*</button>
+            <button id="division" class="btn operators">/</button>
+            <button id="result" class="btn operators">=</button>
           </div>
         </div>
       </div>

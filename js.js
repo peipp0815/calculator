@@ -176,7 +176,6 @@ operators.forEach((input) => {
     }
 
     if (calculator.num1 !== undefined && input.id !== "result") {
-      prevCalculation.textContent = "";
       calculator.num1Complete = true;
       calculator.operator = input.id;
       calculator.justGotResult = false;

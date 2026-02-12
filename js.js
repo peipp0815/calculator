@@ -133,12 +133,12 @@ function numbersListener(num) {
   if (calculator.justGotResult) {
     clearCalculator();
   }
-  if (num.id !== "dot" || calculator.alreadyUsedDot === false) {
+  if (num !== "dot" || calculator.alreadyUsedDot === false) {
     if (calculator.num1Complete === false) {
-      calculator.num1 = updateNumbers(num.id);
+      calculator.num1 = updateNumbers(num);
       display.textContent = calculator.num1;
     } else {
-      calculator.num2 = updateNumbers(num.id);
+      calculator.num2 = updateNumbers(num);
       display.textContent = calculator.num2;
     }
   }
@@ -172,9 +172,9 @@ function operatorsListener(input) {
     }
   }
 
-  if (calculator.num1 !== undefined && input.id !== "result") {
+  if (calculator.num1 !== undefined && input !== "result") {
     calculator.num1Complete = true;
-    calculator.operator = input.id;
+    calculator.operator = input;
     calculator.justGotResult = false;
   }
 
@@ -202,15 +202,77 @@ function backspaceListener() {
   }
 }
 
+function numbersToText(num) {
+  switch (num) {
+    case "0":
+      return "zero";
+      break;
+    case "1":
+      return "one";
+      break;
+    case "2":
+      return "two";
+      break;
+    case "3":
+      return "three";
+      break;
+    case "4":
+      return "four";
+      break;
+    case "5":
+      return "five";
+      break;
+    case "6":
+      return "six";
+      break;
+    case "7":
+      return "seven";
+      break;
+    case "8":
+      return "eight";
+      break;
+    case "9":
+      return "nine";
+      break;
+    case ".":
+      return "dot";
+      break;
+    default:
+      break;
+  }
+}
+
+function operatorsToText(op) {
+  switch (op) {
+    case "+":
+      return "addition";
+      break;
+    case "-":
+      return "subtraction";
+      break;
+    case "*":
+      return "multiplication";
+      break;
+    case "/":
+      return "division";
+      break;
+    case "=":
+      return "result";
+      break;
+    default:
+      break;
+  }
+}
+
 numbers.forEach((num) => {
   num.addEventListener("click", function () {
-    numbersListener(num);
+    numbersListener(num.id);
   });
 });
 
 operators.forEach((input) => {
   input.addEventListener("click", () => {
-    operatorsListener(input);
+    operatorsListener(input.id);
   });
 });
 
@@ -222,4 +284,18 @@ backspace.addEventListener("click", () => {
   backspaceListener();
 });
 
-//document.addEventListener("keyup", (e) => {});
+const NUMBERS = "0132456789.";
+const OPERATORS = "+-*/";
+document.addEventListener("keyup", (e) => {
+  if (NUMBERS.includes(e.key)) {
+    numbersListener(numbersToText(e.key));
+  } else if (OPERATORS.includes(e.key)) {
+    operatorsListener(operatorsToText(e.key));
+  } else if (e.key === "Escape") {
+    clearListener();
+  } else if (e.key === "Backspace") {
+    backspaceListener();
+  } else if (e.key === "Enter") {
+    operatorsListener("result");
+  }
+});

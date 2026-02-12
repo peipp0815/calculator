@@ -23,7 +23,7 @@
   height: 90px;
   margin: 8px 4px;
   font-size: xx-large;
-  box-shadow: inset 2px 2px green;
+  box-shadow: inset 2px 2px 0px 1px green;
   white-space: nowrap;
   overflow: auto;
   border-radius: 5px;

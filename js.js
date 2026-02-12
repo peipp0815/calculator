@@ -15,15 +15,17 @@ const backspace = document.querySelector("#backspace");
 const prevCalculation = document.querySelector(".prevCalculation");
 
 function add(a, b) {
-  return Number(a) + Number(b);
+  return (
+    Math.round((Number(a) + Number(b)) * Math.pow(10, 10)) / Math.pow(10, 10)
+  );
 }
 
 function subtract(a, b) {
-  return a - b;
+  return Math.round((a - b) * Math.pow(10, 10)) / Math.pow(10, 10);
 }
 
 function multiply(a, b) {
-  return a * b;
+  return Math.round(a * b * Math.pow(10, 10)) / Math.pow(10, 10);
 }
 
 function divide(a, b) {

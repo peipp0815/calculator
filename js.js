@@ -285,7 +285,7 @@ backspace.addEventListener("click", () => {
 });
 
 const NUMBERS = "0132456789.";
-const OPERATORS = "+-*/";
+const OPERATORS = "+-*/=";
 document.addEventListener("keyup", (e) => {
   if (NUMBERS.includes(e.key)) {
     numbersListener(numbersToText(e.key));

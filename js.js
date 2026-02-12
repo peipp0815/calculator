@@ -142,9 +142,6 @@ function numbersListener(num) {
       display.textContent = calculator.num2;
     }
   }
-  console.log(`num1 ${calculator.num1}`);
-  console.log(`num2 ${calculator.num2}`);
-  console.log(`operator ${calculator.operator}`);
 }
 
 function operatorsListener(input) {
@@ -177,10 +174,6 @@ function operatorsListener(input) {
     calculator.operator = input;
     calculator.justGotResult = false;
   }
-
-  console.log(`num1 ${calculator.num1}`);
-  console.log(`num2 ${calculator.num2}`);
-  console.log(`operator ${calculator.operator}`);
 }
 
 function clearListener() {

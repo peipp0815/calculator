@@ -129,70 +129,66 @@ function getOperator(op) {
   }
 }
 
-numbers.forEach((num) => {
-  num.addEventListener("click", () => {
-    if (calculator.justGotResult) {
+function numbersListener(num) {
+  if (calculator.justGotResult) {
+    clearCalculator();
+  }
+  if (num.id !== "dot" || calculator.alreadyUsedDot === false) {
+    if (calculator.num1Complete === false) {
+      calculator.num1 = updateNumbers(num.id);
+      display.textContent = calculator.num1;
+    } else {
+      calculator.num2 = updateNumbers(num.id);
+      display.textContent = calculator.num2;
+    }
+  }
+  console.log(`num1 ${calculator.num1}`);
+  console.log(`num2 ${calculator.num2}`);
+  console.log(`operator ${calculator.operator}`);
+}
+
+function operatorsListener(input) {
+  calculator.alreadyUsedDot = false;
+  //calculate the prev operation
+  if (
+    calculator.operator !== undefined &&
+    calculator.num1 !== undefined &&
+    calculator.num2 !== undefined
+  ) {
+    prevCalculation.textContent = `${Number(calculator.num1)} ${getOperator(calculator.operator)} ${Number(calculator.num2)}`;
+    calculator.num1 = operate(
+      calculator.num1,
+      calculator.operator,
+      calculator.num2,
+    );
+    if (!Number.isFinite(calculator.num1)) {
       clearCalculator();
-    }
-    if (num.id !== "dot" || calculator.alreadyUsedDot === false) {
-      if (calculator.num1Complete === false) {
-        calculator.num1 = updateNumbers(num.id);
-        display.textContent = calculator.num1;
-      } else {
-        calculator.num2 = updateNumbers(num.id);
-        display.textContent = calculator.num2;
-      }
-    }
-    console.log(`num1 ${calculator.num1}`);
-    console.log(`num2 ${calculator.num2}`);
-    console.log(`operator ${calculator.operator}`);
-  });
-});
-
-operators.forEach((input) => {
-  input.addEventListener("click", () => {
-    calculator.alreadyUsedDot = false;
-    //calculate the prev operation
-    if (
-      calculator.operator !== undefined &&
-      calculator.num1 !== undefined &&
-      calculator.num2 !== undefined
-    ) {
-      prevCalculation.textContent = `${calculator.num1} ${getOperator(calculator.operator)} ${calculator.num2}`;
-      calculator.num1 = operate(
-        calculator.num1,
-        calculator.operator,
-        calculator.num2,
-      );
-      if (!Number.isFinite(calculator.num1)) {
-        clearCalculator();
-        display.textContent = "Don't do that!";
-      } else {
-        calculator.num1Complete = true;
-        display.textContent = calculator.num1;
-        calculator.justGotResult = true;
-        calculator.num2 = undefined;
-      }
-    }
-
-    if (calculator.num1 !== undefined && input.id !== "result") {
+      display.textContent = "Don't do that!";
+    } else {
       calculator.num1Complete = true;
-      calculator.operator = input.id;
-      calculator.justGotResult = false;
+      display.textContent = calculator.num1;
+      calculator.justGotResult = true;
+      calculator.num2 = undefined;
     }
+  }
 
-    console.log(`num1 ${calculator.num1}`);
-    console.log(`num2 ${calculator.num2}`);
-    console.log(`operator ${calculator.operator}`);
-  });
-});
+  if (calculator.num1 !== undefined && input.id !== "result") {
+    calculator.num1Complete = true;
+    calculator.operator = input.id;
+    calculator.justGotResult = false;
+  }
 
-clear.addEventListener("click", () => {
+  console.log(`num1 ${calculator.num1}`);
+  console.log(`num2 ${calculator.num2}`);
+  console.log(`operator ${calculator.operator}`);
+}
+
+function clearListener() {
   clearCalculator();
   display.textContent = "";
-});
+}
 
-backspace.addEventListener("click", () => {
+function backspaceListener() {
   if (
     calculator.num2 === undefined &&
     calculator.num1 !== undefined &&
@@ -204,4 +200,26 @@ backspace.addEventListener("click", () => {
     calculator.num2 = calculator.num2.slice(0, -1);
     display.textContent = calculator.num2;
   }
+}
+
+numbers.forEach((num) => {
+  num.addEventListener("click", function () {
+    numbersListener(num);
+  });
 });
+
+operators.forEach((input) => {
+  input.addEventListener("click", () => {
+    operatorsListener(input);
+  });
+});
+
+clear.addEventListener("click", () => {
+  clearListener();
+});
+
+backspace.addEventListener("click", () => {
+  backspaceListener();
+});
+
+//document.addEventListener("keyup", (e) => {});
